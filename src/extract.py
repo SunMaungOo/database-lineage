@@ -7,6 +7,8 @@ from graph import merge_edges
 from dataclasses import asdict
 import json
 from pathlib import Path
+from graph import Edge
+from typing import List
 
 logger = logging.getLogger("database-lineage")
 
@@ -75,9 +77,11 @@ def main()->int:
 
     logger.info(f"Procedure lineage Extracted:{len(procedure_lineages)}")
 
-    lineages = view_lineages.extend(procedure_lineages)
-
-    lineages = merge_edges(graphs=merge_edges)
+    lineages:List[List[Edge]] = list()
+    lineages.append(view_lineages)
+    lineages.append(procedure_lineages)
+    
+    lineages = merge_edges(graphs=lineages)
 
     logger.info(f"Total lineage Extracted:{len(lineages)}")
 

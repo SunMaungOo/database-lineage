@@ -13,7 +13,7 @@ def get_view_lineage(connection_str:str,\
 
     try:
 
-        graphs:List[Edge] = list()
+        graphs:List[List[Edge]] = list()
 
         for row in query(connection_str=connection_str,\
                          query=GET_VIEW_LINEAGE):
@@ -40,10 +40,13 @@ def get_view_lineage(connection_str:str,\
                 is_fqn=is_fqn
             )
 
-            graphs.append(Edge(
+            edge:List[Edge] = list()
+            edge.append(Edge(
                 node_name=target,\
                 parent_nodes=[source]
             ))
+
+            graphs.append(edge)
 
         return merge_edges(graphs=graphs)
         
@@ -75,7 +78,7 @@ def get_procedure_lineage(connection_str:str,\
             if vih is None:
                 continue
 
-            vihs.append(vih)
+            vihs.extend(vih)
 
         vihs = clean_vihs(vihs=vihs)
 
