@@ -1,6 +1,6 @@
 from decouple import config
 
-OUTPUT_FILE_PATH = config("OUTPUT_FILE_PATH",cast=str)
+OUTPUT_FILE_PATH = config("OUTPUT_FILE_PATH",cast=str,default="lineage.json")
 
 HOST_NAME = config("HOST_NAME",cast=str)
 
